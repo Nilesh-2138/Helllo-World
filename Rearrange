@@ -1,0 +1,66 @@
+/*  Given a sorted array of positive integers. Your task is to rearrange  the array elements alternatively i.e first element 
+      should be max value, second should be min value, third should be second max, fourth should
+      be second min and so on.  */
+      
+    /*  LOGIC WITH EXAMPLE 
+         ARR[] = {1,2,3,4,5,6};
+         MAX = 6+1=7
+         MAX_ITR = N-1 =6-1=5
+         MIN_ITR = 0
+         I = 0:
+            0 IS EVEN NUMBER :
+               ARR[0] = ARR[0]+MAX*(ARR[MAX_ITR]%MAX)
+               ARR[0] = 1+7*(ARR[5]%7)
+               ARR[0] = 1+7*(6%7)
+               ARR[0] = 1+7*6
+               ARR[0] = 43
+               MAX_ITR = 5-1=4
+          I = 1:
+              1 IS ODD NUMBER :
+              ARR[1] = ARR[1] + MAX(ARR[MIN_ITR]%MAX)
+              ARR[1] = 2 +7(ARR[0]%7)
+              ARR[1] = 2 +7(43%7)
+              ARR[1] = 2+ 7*1
+              ARR[1] = 9
+              MIN_ITR = MIN_ITR+1 = 1
+          AND SO ON 
+          FINALLY WE GET ARRAY 
+          ARR = {43,9,38,18,33,27}
+          ARR%7 = {1,2,3,4,5,6}
+          ARR/7 = {6,1,5,2,4,3}
+          */
+
+#include<iostream>
+#include<stdio.h>
+#include<stdlib.h>
+using namespace std;
+void rearrange(long long int ar[],int n){
+    int min_itr=0;
+    int max_itr=n-1;
+    int max=ar[n-1]+1;
+    for(int i=0;i<n;i++){
+        if(i%2==0){
+            ar[i]=ar[i]+max*(ar[max_itr]%max);
+            max_itr-=1;
+        }
+        else{
+            ar[i]=ar[i]+max*(ar[min_itr]%max);
+            min_itr+=1;
+        }
+    }
+    for(int i=0;i<n;i++){
+        ar[i]/=max;
+    }
+    printf("\n");
+    for(int i=0;i<n;i++){
+        std::cout<<ar[i]<<" ";
+    }
+    
+}
+int main(){
+    long long int arr[]={10,20,30,40,50,60,70,80,90,100,110};
+    size_t N;
+    N = sizeof(arr)/sizeof(arr[0]); 
+    rearrange(arr,N);
+    return 0;
+}
